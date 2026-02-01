@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蓄電池チャージゲーム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="title">蓄電池チャージゲーム</h1>
+
+        <!-- 蓄電池表示エリア -->
+        <div class="battery-container">
+            <div class="battery">
+                <div class="battery-cap"></div>
+                <div class="battery-body">
+                    <div class="battery-level" id="batteryLevel"></div>
+                    <span class="battery-percentage" id="batteryPercentage">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ハートアニメーションエリア -->
+        <div class="heart-area" id="heartArea"></div>
+
+        <!-- タイマー表示 -->
+        <div class="timer" id="timer">タイム: 0.00秒</div>
+
+        <!-- ゲーム画面 -->
+        <div class="game-screen" id="gameScreen">
+            <!-- スタート画面 -->
+            <div class="screen start-screen" id="startScreen">
+                <p class="instruction">ボタンを連打して<br>蓄電池を満タンにしよう！</p>
+                <button class="btn start-btn" id="startBtn">ゲームスタート</button>
+            </div>
+
+            <!-- カウントダウン画面 -->
+            <div class="screen countdown-screen hidden" id="countdownScreen">
+                <div class="countdown-number" id="countdownNumber">3</div>
+            </div>
+
+            <!-- プレイ画面 -->
+            <div class="screen play-screen hidden" id="playScreen">
+                <button class="btn charge-btn" id="chargeBtn">
+                    <span class="charge-text">充電！</span>
+                    <span class="charge-icon">⚡</span>
+                </button>
+            </div>
+
+            <!-- 結果画面 -->
+            <div class="screen result-screen hidden" id="resultScreen">
+                <div class="result-content">
+                    <h2 class="result-title">満タン達成！</h2>
+                    <div class="result-time" id="resultTime">00.00秒</div>
+                    <button class="btn replay-btn" id="replayBtn">もう一度プレイ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
