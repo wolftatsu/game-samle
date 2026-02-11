@@ -28,6 +28,8 @@ let gameState = {
     comboCount: 0,
     timerInterval: null,
     dischargeInterval: null,
+    playerName: '',
+    finalTime: 0,
 };
 
 // DOM要素
@@ -35,12 +37,20 @@ const elements = {
     batteryPercentage: document.getElementById('batteryPercentage'),
     heartArea: document.getElementById('heartArea'),
     timer: document.getElementById('timer'),
+    // 画面要素
+    nameScreen: document.getElementById('nameScreen'),
     startScreen: document.getElementById('startScreen'),
     countdownScreen: document.getElementById('countdownScreen'),
     countdownNumber: document.getElementById('countdownNumber'),
     playScreen: document.getElementById('playScreen'),
     resultScreen: document.getElementById('resultScreen'),
     resultTime: document.getElementById('resultTime'),
+    // ボタン要素
+    playerNameInput: document.getElementById('playerNameInput'),
+    nameSubmitBtn: document.getElementById('nameSubmitBtn'),
+    playerNameDisplay: document.getElementById('playerNameDisplay'),
+    resultPlayer: document.getElementById('resultPlayer'),
+    rankingBody: document.getElementById('rankingBody'),
     startBtn: document.getElementById('startBtn'),
     chargeBtn: document.getElementById('chargeBtn'),
     replayBtn: document.getElementById('replayBtn'),
@@ -62,12 +72,16 @@ const elements = {
 
 // 画面切り替え
 function showScreen(screenName) {
+    elements.nameScreen.classList.add('hidden');
     elements.startScreen.classList.add('hidden');
     elements.countdownScreen.classList.add('hidden');
     elements.playScreen.classList.add('hidden');
     elements.resultScreen.classList.add('hidden');
 
     switch (screenName) {
+        case 'name':
+            elements.nameScreen.classList.remove('hidden');
+            break;
         case 'start':
             elements.startScreen.classList.remove('hidden');
             break;
@@ -81,6 +95,63 @@ function showScreen(screenName) {
             elements.resultScreen.classList.remove('hidden');
             break;
     }
+}
+
+// ゲスト名生成
+function generateGuestName() {
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    return `ゲスト_${randomNum}`;
+}
+
+// 名前送信処理
+function submitName() {
+    let name = elements.playerNameInput.value.trim();
+    if (!name) {
+        name = generateGuestName();
+    }
+    gameState.playerName = name;
+    elements.playerNameDisplay.textContent = `プレイヤー: ${name}`;
+    showScreen('start');
+}
+
+// ランキング取得
+function getRanking() {
+    const data = localStorage.getItem('batteryGameRanking');
+    return data ? JSON.parse(data) : [];
+}
+
+// ランキング保存
+function saveRanking(name, time) {
+    let ranking = getRanking();
+    ranking.push({ name, time, date: new Date().toISOString() });
+    ranking.sort((a, b) => a.time - b.time);
+    ranking = ranking.slice(0, 10);
+    localStorage.setItem('batteryGameRanking', JSON.stringify(ranking));
+    return ranking;
+}
+
+// ランキング表示
+function displayRanking(ranking, currentTime) {
+    const top5 = ranking.slice(0, 5);
+    elements.rankingBody.innerHTML = '';
+
+    top5.forEach((entry, index) => {
+        const tr = document.createElement('tr');
+        const isCurrentPlayer = entry.name === gameState.playerName && entry.time === currentTime;
+
+        if (isCurrentPlayer) {
+            tr.classList.add('current-player');
+        }
+
+        const rankClass = index < 3 ? `rank-${index + 1}` : '';
+
+        tr.innerHTML = `
+            <td class="${rankClass}">${index + 1}</td>
+            <td>${entry.name}</td>
+            <td>${entry.time.toFixed(2)}秒</td>
+        `;
+        elements.rankingBody.appendChild(tr);
+    });
 }
 
 // 電池レベルの更新
@@ -285,12 +356,17 @@ function gameComplete() {
     clearInterval(gameState.dischargeInterval);
 
     // 最終タイム計算
-    const finalTime = (Date.now() - gameState.startTime) / 1000;
-    elements.resultTime.textContent = finalTime.toFixed(2) + '秒';
+    gameState.finalTime = (Date.now() - gameState.startTime) / 1000;
+    elements.resultTime.textContent = gameState.finalTime.toFixed(2) + '秒';
+    elements.resultPlayer.textContent = gameState.playerName;
 
     // 電池を満タン表示
     gameState.energy = 100;
     updateBatteryDisplay();
+
+    // ランキング保存・表示
+    const ranking = saveRanking(gameState.playerName, gameState.finalTime);
+    displayRanking(ranking, gameState.finalTime);
 
     // 結果画面表示
     setTimeout(() => {
@@ -298,27 +374,55 @@ function gameComplete() {
     }, 500);
 }
 
-// ゲームリセット
+// ゲームリセット（同じプレイヤーで再プレイ）
 function resetGame() {
     // インターバル停止
     if (gameState.timerInterval) clearInterval(gameState.timerInterval);
     if (gameState.dischargeInterval) clearInterval(gameState.dischargeInterval);
 
-    // 状態リセット
+    // 状態リセット（プレイヤー名は保持）
     gameState.energy = 0;
     gameState.isPlaying = false;
     gameState.startTime = null;
     gameState.lastClickTime = null;
     gameState.comboCount = 0;
+    gameState.finalTime = 0;
 
     updateBatteryDisplay();
     elements.timer.textContent = 'タイム: 0.00秒';
     showScreen('start');
 }
 
+// 初期画面に戻る（名前入力から）
+function goToNameScreen() {
+    // インターバル停止
+    if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+    if (gameState.dischargeInterval) clearInterval(gameState.dischargeInterval);
+
+    // 完全リセット
+    gameState.energy = 0;
+    gameState.isPlaying = false;
+    gameState.startTime = null;
+    gameState.lastClickTime = null;
+    gameState.comboCount = 0;
+    gameState.finalTime = 0;
+    gameState.playerName = '';
+
+    elements.playerNameInput.value = '';
+    updateBatteryDisplay();
+    elements.timer.textContent = 'タイム: 0.00秒';
+    showScreen('name');
+}
+
 // イベントリスナー設定
+elements.nameSubmitBtn.addEventListener('click', submitName);
+elements.playerNameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        submitName();
+    }
+});
 elements.startBtn.addEventListener('click', startGame);
-elements.replayBtn.addEventListener('click', resetGame);
+elements.replayBtn.addEventListener('click', goToNameScreen);
 
 // 充電ボタン（クリック＆タッチ対応）
 elements.chargeBtn.addEventListener('click', charge);
@@ -336,4 +440,4 @@ document.addEventListener('keydown', (e) => {
 });
 
 // 初期化
-showScreen('start');
+showScreen('name');

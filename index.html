@@ -63,8 +63,17 @@
 
         <!-- ゲーム画面 -->
         <div class="game-screen" id="gameScreen">
+            <!-- 名前入力画面 -->
+            <div class="screen name-screen" id="nameScreen">
+                <p class="instruction">プレイヤー名を入力してください</p>
+                <input type="text" class="name-input" id="playerNameInput" placeholder="名前を入力..." maxlength="12">
+                <p class="name-hint">※空欄の場合はゲスト名が自動生成されます</p>
+                <button class="btn start-btn" id="nameSubmitBtn">Start</button>
+            </div>
+
             <!-- スタート画面 -->
-            <div class="screen start-screen" id="startScreen">
+            <div class="screen start-screen hidden" id="startScreen">
+                <p class="player-name-display" id="playerNameDisplay"></p>
                 <p class="instruction">ボタンを連打して<br>蓄電池を満タンにしよう！</p>
                 <button class="btn start-btn" id="startBtn">ゲームスタート</button>
             </div>
@@ -86,8 +95,26 @@
             <div class="screen result-screen hidden" id="resultScreen">
                 <div class="result-content">
                     <h2 class="result-title">満タン達成！</h2>
+                    <div class="result-player" id="resultPlayer"></div>
                     <div class="result-time" id="resultTime">00.00秒</div>
-                    <button class="btn replay-btn" id="replayBtn">もう一度プレイ</button>
+
+                    <!-- ランキング表示 -->
+                    <div class="ranking-section">
+                        <h3 class="ranking-title">Top 5 ランキング</h3>
+                        <table class="ranking-table">
+                            <thead>
+                                <tr>
+                                    <th>順位</th>
+                                    <th>名前</th>
+                                    <th>タイム</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rankingBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button class="btn replay-btn" id="replayBtn">もう一度遊ぶ</button>
                 </div>
             </div>
         </div>
