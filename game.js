@@ -32,7 +32,6 @@ let gameState = {
 
 // DOM要素
 const elements = {
-    batteryLevel: document.getElementById('batteryLevel'),
     batteryPercentage: document.getElementById('batteryPercentage'),
     heartArea: document.getElementById('heartArea'),
     timer: document.getElementById('timer'),
@@ -46,6 +45,19 @@ const elements = {
     chargeBtn: document.getElementById('chargeBtn'),
     replayBtn: document.getElementById('replayBtn'),
     gameContainer: document.querySelector('.game-container'),
+    // 新デザイン用の要素
+    moduleFills: [
+        document.getElementById('module1'),
+        document.getElementById('module2'),
+        document.getElementById('module3'),
+        document.getElementById('module4'),
+        document.getElementById('module5'),
+    ],
+    leds: [
+        document.getElementById('led1'),
+        document.getElementById('led2'),
+        document.getElementById('led3'),
+    ],
 };
 
 // 画面切り替え
@@ -74,17 +86,61 @@ function showScreen(screenName) {
 // 電池レベルの更新
 function updateBatteryDisplay() {
     const percentage = Math.min(100, Math.max(0, gameState.energy));
-    elements.batteryLevel.style.height = percentage + '%';
     elements.batteryPercentage.textContent = Math.floor(percentage) + '%';
 
-    // 色の変更
-    elements.batteryLevel.classList.remove('low', 'medium', 'high');
+    // 色クラスの決定
+    let colorClass = 'high';
     if (percentage < 30) {
-        elements.batteryLevel.classList.add('low');
+        colorClass = 'low';
     } else if (percentage < 70) {
-        elements.batteryLevel.classList.add('medium');
-    } else {
-        elements.batteryLevel.classList.add('high');
+        colorClass = 'medium';
+    }
+
+    // 各モジュールの充填率を更新
+    const numModules = elements.moduleFills.length;
+    elements.moduleFills.forEach((fill, index) => {
+        // 各モジュールが担当する範囲 (0-20, 20-40, 40-60, 60-80, 80-100)
+        const rangeStart = (index / numModules) * 100;
+        const rangeEnd = ((index + 1) / numModules) * 100;
+
+        // 色クラスを更新
+        fill.classList.remove('low', 'medium', 'high');
+        fill.classList.add(colorClass);
+
+        if (percentage >= rangeEnd) {
+            fill.style.width = '100%';
+        } else if (percentage > rangeStart) {
+            const relativePercent = ((percentage - rangeStart) / (100 / numModules)) * 100;
+            fill.style.width = `${relativePercent}%`;
+        } else {
+            fill.style.width = '0%';
+        }
+    });
+
+    // LED状態の更新
+    updateLEDs(percentage);
+}
+
+// LED状態の更新
+function updateLEDs(percentage) {
+    // 全LEDをリセット
+    elements.leds.forEach(led => {
+        led.classList.remove('active-green', 'active-orange', 'active-red');
+    });
+
+    if (percentage >= 100) {
+        // 満タン: 全て緑
+        elements.leds.forEach(led => led.classList.add('active-green'));
+    } else if (percentage >= 70) {
+        // 高充電: 2つ緑
+        elements.leds[0].classList.add('active-green');
+        elements.leds[1].classList.add('active-green');
+    } else if (percentage >= 30) {
+        // 中充電: 1つオレンジ
+        elements.leds[0].classList.add('active-orange');
+    } else if (percentage > 0) {
+        // 低充電: 1つ赤（点滅）
+        elements.leds[0].classList.add('active-red');
     }
 }
 

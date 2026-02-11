@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蓄電池チャージゲーム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,11 +13,44 @@
 
         <!-- 蓄電池表示エリア -->
         <div class="battery-container">
-            <div class="battery">
-                <div class="battery-cap"></div>
-                <div class="battery-body">
-                    <div class="battery-level" id="batteryLevel"></div>
-                    <span class="battery-percentage" id="batteryPercentage">0%</span>
+            <div class="bss-wrapper">
+                <!-- パーセンテージ表示 -->
+                <div class="percentage-display" id="batteryPercentage">0%</div>
+
+                <!-- キャビネット本体 -->
+                <div class="bss-container">
+                    <!-- ステータスライト -->
+                    <div class="led-group">
+                        <div class="led" id="led1"></div>
+                        <div class="led" id="led2"></div>
+                        <div class="led" id="led3"></div>
+                    </div>
+
+                    <!-- 冷却パネル -->
+                    <div class="cooling-panel">
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="vent"></div>
+                        <div class="text-[8px] text-gray-500 mt-2 font-bold uppercase">Cooling</div>
+                    </div>
+
+                    <!-- バッテリーモジュールベイ -->
+                    <div class="module-bay" id="moduleBay">
+                        <div class="battery-module"><div class="module-fill" id="module1"></div></div>
+                        <div class="battery-module"><div class="module-fill" id="module2"></div></div>
+                        <div class="battery-module"><div class="module-fill" id="module3"></div></div>
+                        <div class="battery-module"><div class="module-fill" id="module4"></div></div>
+                        <div class="battery-module"><div class="module-fill" id="module5"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
