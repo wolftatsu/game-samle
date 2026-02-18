@@ -10,25 +10,4 @@
   <rect x="5" y="5" width="120" height="390" rx="8" ry="8"
         fill="url(#panelGrad)" stroke="#4b5563" stroke-width="3"/>
 
-  <!-- ベント（通気口） -->
-  <g transform="translate(18, 30)">
-    <rect x="0" y="0" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="18" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="36" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="54" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="72" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="90" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="108" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="126" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="144" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="162" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="180" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="198" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="216" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="234" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="252" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="270" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="288" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-    <rect x="0" y="306" width="94" height="4" rx="2" fill="#6b7280" opacity="0.5"/>
-  </g>
 </svg>

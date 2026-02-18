@@ -49,6 +49,7 @@ const elements = {
     playerNameInput: document.getElementById('playerNameInput'),
     nameSubmitBtn: document.getElementById('nameSubmitBtn'),
     playerNameDisplay: document.getElementById('playerNameDisplay'),
+    playPlayerNameDisplay: document.getElementById('playPlayerNameDisplay'),
     resultPlayer: document.getElementById('resultPlayer'),
     rankingBody: document.getElementById('rankingBody'),
     startBtn: document.getElementById('startBtn'),
@@ -111,7 +112,8 @@ function submitName() {
     }
     gameState.playerName = name;
     elements.playerNameDisplay.textContent = `プレイヤー: ${name}`;
-    showScreen('start');
+    elements.playPlayerNameDisplay.textContent = `プレイヤー: ${name}`;
+    startGame();
 }
 
 // ランキング取得
