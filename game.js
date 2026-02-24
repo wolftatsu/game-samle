@@ -63,6 +63,9 @@ const elements = {
         document.getElementById('module3'),
         document.getElementById('module4'),
         document.getElementById('module5'),
+        document.getElementById('module6'),
+        document.getElementById('module7'),
+        document.getElementById('module8'),
     ],
     leds: [
         document.getElementById('led1'),
@@ -101,7 +104,7 @@ function showScreen(screenName) {
 // ゲスト名生成
 function generateGuestName() {
     const randomNum = Math.floor(1000 + Math.random() * 9000);
-    return `ゲスト_${randomNum}`;
+    return `ラブ_${randomNum}`;
 }
 
 // 名前送信処理

@@ -25,9 +25,14 @@ body {
 /* タイトル */
 .title {
     color: #00d4ff;
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 30px;
     text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    line-height: 1.6;
+}
+
+.title-sub {
+    font-size: 1.3rem;
 }
 
 /* 蓄電池スタイル - キャビネット型デザイン */
@@ -65,7 +70,7 @@ body {
 .bss-container {
     position: relative;
     width: 200px;
-    height: 280px;
+    height: 400px;
     background: linear-gradient(145deg, #e5e7eb, #9ca3af);
     border: 3px solid #4b5563;
     border-radius: 8px;
@@ -152,7 +157,7 @@ body {
 
 /* 個別バッテリーモジュール */
 .battery-module {
-    height: 18%;
+    height: 11%;
     background: var(--module-black);
     border: 1px solid #374151;
     border-radius: 2px;
@@ -513,7 +518,7 @@ body {
 
     .bss-container {
         width: 160px;
-        height: 220px;
+        height: 320px;
         padding: 8px;
     }
 

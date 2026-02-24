@@ -50,10 +50,6 @@
 
     <!-- ベント (18本) -->
     <g transform="translate(6, 30)">
-      <rect x="0" y="0" width="48" height="3" rx="1" fill="#4b5563" opacity="0.6"/>
-      <rect x="0" y="18" width="48" height="3" rx="1" fill="#4b5563" opacity="0.6"/>
-      <rect x="0" y="36" width="48" height="3" rx="1" fill="#4b5563" opacity="0.6"/>
-      <rect x="0" y="54" width="48" height="3" rx="1" fill="#4b5563" opacity="0.6"/>
       <rect x="0" y="72" width="48" height="3" rx="1" fill="#4b5563" opacity="0.6"/>
       <rect x="0" y="90" width="48" height="3" rx="1" fill="#4b5563" opacity="0.6"/>
       <rect x="0" y="108" width="48" height="3" rx="1" fill="#4b5563" opacity="0.6"/>
