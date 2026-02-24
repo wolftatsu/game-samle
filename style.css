@@ -120,6 +120,19 @@ body {
     100% { opacity: 1; }
 }
 
+/* ロゴ */
+.battery-logo {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+}
+
+.battery-logo img {
+    width: 40px;
+    height: auto;
+}
+
 /* 冷却パネル */
 .cooling-panel {
     width: 35%;
@@ -128,9 +141,11 @@ body {
     border-right: 1px solid rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 5px;
+    gap: 0;
+    padding-top: 50px;
+    padding-bottom: 10px;
 }
 
 .vent {
