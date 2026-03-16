@@ -19,6 +19,10 @@ const CONFIG = {
     UPDATE_INTERVAL: 50,
 };
 
+// BGM
+const bgm = new Audio('love-battery-p.m4a');
+bgm.loop = true;
+
 // ゲーム状態
 let gameState = {
     energy: 0,
@@ -104,7 +108,7 @@ function showScreen(screenName) {
 // ゲスト名生成
 function generateGuestName() {
     const randomNum = Math.floor(1000 + Math.random() * 9000);
-    return `ラブ_${randomNum}`;
+    return `ラブバッテリー_${randomNum}`;
 }
 
 // 名前送信処理
@@ -341,6 +345,10 @@ function beginPlay() {
     gameState.isPlaying = true;
     gameState.startTime = Date.now();
 
+    // BGM再生
+    bgm.currentTime = 0;
+    bgm.play().catch(() => {});
+
     // タイマー更新開始
     gameState.timerInterval = setInterval(() => {
         updateTimerDisplay();
@@ -400,6 +408,10 @@ function resetGame() {
 
 // 初期画面に戻る（名前入力から）
 function goToNameScreen() {
+    // BGM停止
+    bgm.pause();
+    bgm.currentTime = 0;
+
     // インターバル停止
     if (gameState.timerInterval) clearInterval(gameState.timerInterval);
     if (gameState.dischargeInterval) clearInterval(gameState.dischargeInterval);
